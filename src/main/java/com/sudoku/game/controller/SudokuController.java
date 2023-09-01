@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.sudoku.game.entity.SudokuBoard;
 import com.sudoku.game.model.SudokuGenerator;
+import com.sudoku.game.model.SudokuSolver;
 import com.sudoku.game.repository.SudokuBoardRepository;
 
 @Controller
@@ -66,5 +67,27 @@ public class SudokuController {
     return "sudoku-board";
 }
 
+   @GetMapping("/solve")
+    public String solvePuzzle(Model model) {
+        List<SudokuBoard> sudokuBoardList = SudokuBoardRepository.findAll();
+        int[][] board = new int[9][9];
 
+        for (SudokuBoard sudokuBoard : sudokuBoardList) {
+            int row = sudokuBoard.getSudokuRow();
+            int column = sudokuBoard.getSudokuColumn();
+            int value = sudokuBoard.getValue();
+            board[row][column] = value;
+        }
+
+        // Solve the puzzle using SudokuSolver
+        boolean solved = SudokuSolver.solve(board);
+
+        if (solved) {
+            model.addAttribute("solvedPuzzle", board);
+        } else {
+            model.addAttribute("errorMessage", "Could not solve the puzzle.");
+        }
+
+        return "solved";
+    }
 }
