@@ -1,5 +1,8 @@
 package com.sudoku.game.controller;
 
+
+import java.util.List;
+
 import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,20 +45,26 @@ public class SudokuController {
            
             }
         }
-        return "generated"; 
+        return "redirect:/sudoku-board"; 
     }
 
-//     @GetMapping("/input/board")
-//     public String showBoard()
-//     {
-//         return "generated";
-//     }
+    @GetMapping("/sudoku-board")
+    public String showSudokuBoard(Model model)
+     {
+        List<SudokuBoard> sudokuBoardList = SudokuBoardRepository.findAll();
+        int[][] board = new int[9][9];
 
-//     public void saveSudokuBoard(int row, int column, int value) {
-//     SudokuBoard sudokuBoard = new SudokuBoard();
-//     sudokuBoard.setRow(row);
-//     sudokuBoard.setColumn(column);
-//     sudokuBoard.setValue(value);
-//     sudokuBoardRepository.save(sudokuBoard);
-// }
+    for (SudokuBoard sudokuBoard : sudokuBoardList)
+    {
+        int row = sudokuBoard.getSudokuRow();
+        int column = sudokuBoard.getSudokuColumn();
+        int value = sudokuBoard.getValue();
+        board[row][column] = value;
+    }
+
+    model.addAttribute("board", board);
+    return "sudoku-board";
+}
+
+
 }

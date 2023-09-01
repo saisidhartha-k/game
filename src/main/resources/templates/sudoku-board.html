@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Board</title>
+    <style>
+        /* Style the Sudoku board table */
+        table {
+            border-collapse: collapse;
+            border: 2px solid #000;
+            margin: 0 auto;
+        }
+        table td {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid #000;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sudoku Board</h1>
+    <table>
+        <!-- Loop through the Sudoku grid to create table cells -->
+        <tr th:each="row, rowIndex : ${board}">
+            <td th:each="cell, cellIndex : ${row}">
+                <span th:if="${cell != 0}" th:text="${cell}"></span>
+                <span th:if="${cell == 0}">&nbsp;</span>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
