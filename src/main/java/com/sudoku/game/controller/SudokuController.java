@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.sudoku.game.entity.SudokuBoard;
 import com.sudoku.game.model.SudokuGenerator;
 import com.sudoku.game.model.SudokuSolver;
+import com.sudoku.game.model.UserSudokuSolver;
 import com.sudoku.game.repository.SudokuBoardRepository;
 
 @Controller
@@ -79,7 +80,6 @@ public class SudokuController {
             board[row][column] = value;
         }
 
-        // Solve the puzzle using SudokuSolver
         boolean solved = SudokuSolver.solve(board);
 
         if (solved) {
@@ -90,4 +90,40 @@ public class SudokuController {
 
         return "solved";
     }
+
+
+    // @PostMapping("/user_solver")
+    // public String solvePuzzle(SudokuGenerator generator, Model model) {
+    //     int[][] userInput = generator.generatePuzzle();
+
+    //     if (!UserSudokuSolver.isValidSudoku(userInput)) {
+    //         model.addAttribute("errorMessage", "Invalid Sudoku puzzle. Please check your input.");
+    //         return "input";
+    //     }
+
+    //     boolean solved = SudokuSolver.solve(userInput);
+
+    //     if (solved) {
+    //         model.addAttribute("solvedPuzzle", userInput);
+    //     } else {
+    //         model.addAttribute("errorMessage", "Could not solve the puzzle.");
+    //     }
+
+    //     return "Usersolved";
+    // }
+
+    // @PostMapping("/validate")
+    // public String validatePuzzle(SudokuGenerator generator, Model model) {
+    //     int[][] userInput = generator.getUserInput();
+
+    //     // Use SudokuSolver to check if the user input is a valid Sudoku puzzle
+    //     SudokuSolver solver = new SudokuSolver(userInput);
+    //     boolean isValid = solver.isValidSudoku();
+
+    //     model.addAttribute("isValid", isValid);
+
+    //     return "validation-result";
+    // }
+
+
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Input</title>
+</head>
+<body>
+    <h1>Sudoku Input</h1>
+    <form action="/solve" th:action="@{/solve}" method="post">
+        <table>
+            <tr th:each="row, rowIndex : *{userInput}">
+                <td th:each="cell, cellIndex : ${row}">
+                    <input type="number" min="1" max="9" th:field="*{userInput[__${rowIndex.index}__][__${cellIndex.index}__]}" />
+                </td>
+            </tr>
+        </table>
+        <button type="submit">Solve Puzzle</button>
+    </form>
+</body>
+</html>

@@ -5,7 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sudoku Board</title>
     <style>
-        /* Style the Sudoku board table */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            border: 2px solid #000;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            background-color: #f2f2f2;
+        }
+
         table {
             border-collapse: collapse;
             border: 2px solid #000;
@@ -18,18 +33,40 @@
             border: 1px solid #000;
             font-size: 18px;
         }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="text"] {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
-    <h1>Sudoku Board</h1>
-    <table>
-        <!-- Loop through the Sudoku grid to create table cells -->
-        <tr th:each="row, rowIndex : ${board}">
-            <td th:each="cell, cellIndex : ${row}">
-                <span th:if="${cell != 0}" th:text="${cell}"></span>
-                <span th:if="${cell == 0}">&nbsp;</span>
-            </td>
-        </tr>
-    </table>
+    <div class="card">
+        <h1>Sudoku Board</h1>
+        <table>
+            <tr th:each="row, rowIndex : ${board}">
+                <td th:each="cell, cellIndex : ${row}">
+                    <span th:if="${cell != 0}" th:text="${cell}"></span>
+                    <span th:if="${cell == 0}">&nbsp;</span>
+                </td>
+            </tr>
+        </table>
+        <form th:action="@{/solve}" method="get">
+            <button type="submit">Make the computer solve it</button>
+        </form>
+    </div>
 </body>
 </html>

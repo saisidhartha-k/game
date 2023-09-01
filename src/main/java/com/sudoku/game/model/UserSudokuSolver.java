@@ -1,17 +1,28 @@
 package com.sudoku.game.model;
 
-public class SudokuSolver {
+public class UserSudokuSolver {
 
     private static final int EMPTY_CELL = 0;
-
     private static final int SIZE = 9;
 
     public static boolean solve(int[][] puzzle) {
         return solveSudoku(puzzle, 0, 0);
     }
 
+    public static boolean isValidSudoku(int[][] puzzle) {
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                int num = puzzle[row][col];
+                if (num != EMPTY_CELL && !isValidPlacement(puzzle, row, col, num)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     private static boolean solveSudoku(int[][] puzzle, int row, int col) {
-        if (row == SIZE - 1 && col == SIZE) {
+     if (row == SIZE - 1 && col == SIZE) {
             return true; 
         }
 
